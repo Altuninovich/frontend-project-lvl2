@@ -1,0 +1,19 @@
+{
+  "name": "project-2",
+  "version": "1.0.0",
+  "description": "'Project-2 hexlet'",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Altuninovich/frontend-project-lvl2.git"
+  },
+  "author": "'Altuninovich'",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Altuninovich/frontend-project-lvl2/issues"
+  },
+  "homepage": "https://github.com/Altuninovich/frontend-project-lvl2#readme"
+}
