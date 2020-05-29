@@ -4,16 +4,36 @@
   "description": "'Project-2 hexlet'",
   "main": "index.js",
   "scripts": {
+    "build": "cross-env NODE_ENV=production babel src --out-dir dist --source-maps inline",
     "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "bin": {
+    "gendiff": "dist/bin/gendiff.js"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/Altuninovich/frontend-project-lvl2.git"
   },
+  "type": "module",
   "author": "'Altuninovich'",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/Altuninovich/frontend-project-lvl2/issues"
   },
-  "homepage": "https://github.com/Altuninovich/frontend-project-lvl2#readme"
+  "homepage": "https://github.com/Altuninovich/frontend-project-lvl2#readme",
+  "devDependencies": {
+    "@babel/cli": "^7.10.1",
+    "@babel/core": "^7.10.1",
+    "@babel/node": "^7.10.1",
+    "@babel/preset-env": "^7.10.1",
+    "babel-eslint": "^10.1.0",
+    "cross-env": "^7.0.2",
+    "eslint": "^7.1.0",
+    "eslint-config-airbnb-base": "^14.1.0",
+    "eslint-plugin-babel": "^5.3.0",
+    "eslint-plugin-import": "^2.20.2"
+  },
+  "dependencies": {
+    "commander": "^5.1.0"
+  }
 }
