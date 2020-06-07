@@ -4,7 +4,7 @@ import path from 'path';
 
 const getFixturePath = (filename) => path.join(__dirname, '..', '__fixtures__', filename);
 //const readFile = (filename) => JSON.parse(fs.readFile(getFixturePath(filename), 'utf-8'));
-const formats = ['json', 'yml'];
+const formats = ['json', 'yml', 'ini'];
 let expected;
 
 beforeAll(() => {
