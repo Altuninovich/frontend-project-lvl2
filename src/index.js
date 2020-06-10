@@ -1,30 +1,36 @@
-import parsers from './parsers.js'
+import parsers from './parsers.js';
+import formatters from './formatters/index.js';
 const fs = require('fs');
-const genDiff = (pathToFile1, pathToFile2, format) => {
-	const data1 = parsers(pathToFile1);
-	const data2 = parsers(pathToFile2);
-	const arrKey = Object.keys({ ...data1, ...data2});
+const genDiff = (pathToFile1, pathToFile2, format = 'stylish') => {
+	const dataBefore = parsers(pathToFile1);
+	const dataAfter = parsers(pathToFile2);
 
-  const checkingValues = (key) => {
-  if (data1[key] === data2[key]) {
-   return [`  ${key}: ${data2[key]}`];
-  } 
-  return [` - ${key}: ${data1[key]}`, ` + ${key}: ${data2[key]}`];
-};
+	const render = (objFileBefore, objFileAfter) => {
+   const arrUniqueKey = Object.keys({...objFileBefore, ...objFileAfter});
+   
+   const resObj = arrUniqueKey.reduce((acc, key) => {
+     const valueBefore = objFileBefore[key];
+     const valueAfter = objFileAfter[key];
+    
+     if (valueBefore && valueAfter) {
+       if (typeof(valueBefore) === 'object' && typeof(valueAfter) === 'object') { 
+           return Object.assign(acc, {[key]: render(valueBefore, valueAfter)});     
+         }
+         if (valueBefore === valueAfter) {
+          return Object.assign(acc, {[key]: valueBefore});
+         }
+        return Object.assign(acc, {[`- ${key}`]: valueBefore}, {[`+ ${key}`]: valueAfter})
+     }
 
-  const comparisonResult = arrKey.reduce((acc, key) => {
-    if (data1.hasOwnProperty(key) && !data2.hasOwnProperty(key)) {
-      return [...acc, ` - ${key}: ${data1[key]}`]
-    }
-    if (!data1.hasOwnProperty(key) && data2.hasOwnProperty(key)) {
-      return [...acc, ` + ${key}: ${data2[key]}`]
-    }
-    return [...acc, ...checkingValues(key)]
-  }, []).join('\n');
-
-return `{
-${comparisonResult}
-}`; 
+     if (valueBefore) {
+       return Object.assign(acc, {[`- ${key}`]: valueBefore});
+     }
+     return Object.assign(acc, {[`+ ${key}`]: valueAfter});
+   }, {});
+   return resObj;
+  }
+	
+  return formatters(render(dataBefore, dataAfter), format);
 
 };
 export default genDiff;

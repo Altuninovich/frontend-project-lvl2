@@ -6,8 +6,7 @@ import ini from 'ini';
 const parsers = (pathToFile) => {
 	const ext = path.extname(pathToFile);
 	const dataFile = fs.readFileSync(pathToFile, 'utf-8');
-
-	switch(ext) {
+	switch (ext) {
 		case '.json':
 		  return JSON.parse(dataFile);
 		case '.yml':
