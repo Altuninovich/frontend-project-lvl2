@@ -6,13 +6,15 @@ const getFixturePathFlat = (filename) => path.join(__dirname, '..', '__fixtures_
 const getFixturePathNested = (filename) => path.join(__dirname, '..', '__fixtures__', 'nested', filename);
 //const readFile = (filename) => JSON.parse(fs.readFile(getFixturePath(filename), 'utf-8'));
 const formats = ['json', 'yml', 'ini'];
-const formatsNested = ['json']
+const formatsNested = ['json', 'yml', 'ini'];
 let expected;
-let expectedNested;
+let expectedNestedStylish;
+let expectedNestedPlain
 
 beforeAll(() => {
   expected = fs.readFileSync(getFixturePathFlat('result.diff'), 'utf-8');
-  expectedNested = fs.readFileSync(getFixturePathNested('result.diff'), 'utf-8');
+  expectedNestedStylish = fs.readFileSync(getFixturePathNested('result-stylish.diff'), 'utf-8');
+  expectedNestedPlain = fs.readFileSync(getFixturePathNested('result-plain.diff'), 'utf-8');
 });
 
  test.each(formats)('compare two %s files', (format) => {
@@ -23,8 +25,10 @@ beforeAll(() => {
  test.each(formatsNested)('compare two %s files', (format) => {
  	  const before = getFixturePathNested(`before.${format}`);
       const after = getFixturePathNested(`after.${format}`);
-      console.log(before);
-      console.log(after);
-      console.log(genDiff(before, after))
-      expect(genDiff(before, after)).toString(expectedNested);
+      expect(genDiff(before, after)).toString(expectedNestedStylish);
+   });
+ test.each(formatsNested)('compare two %s files', (format) => {
+    const before = getFixturePathNested(`before.${format}`);
+      const after = getFixturePathNested(`after.${format}`);
+      expect(genDiff(before, after, 'plain')).toString(expectedNestedPlain);
    });

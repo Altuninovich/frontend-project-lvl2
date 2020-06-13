@@ -1,3 +1,5 @@
+import render from './render.js';
+
 const tab = (x) => ' '.repeat(x);
 
 const getSpace = (key, depth) => {
@@ -6,7 +8,8 @@ const getSpace = (key, depth) => {
   return tab(newDepth);
 };
 
-const getFormatStylish = (formatObj) => {
+const getFormatStylish = (obj1, obj2) => {
+	const formatObj = render(obj1, obj2);
 
   const iter = (obj, spaceStr, spaceBracket) => {
 
