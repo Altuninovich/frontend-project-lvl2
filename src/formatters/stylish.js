@@ -1,26 +1,36 @@
-import render from './render.js';
-
 const tab = (x) => ' '.repeat(x);
-
-const getSpace = (key, depth) => {
-  const firstSymbol = key.split('')[0];
-  const newDepth = firstSymbol === '+' || firstSymbol === '-' ? depth - 2 : depth;
-  return tab(newDepth);
-};
-const getFormatStylish = (obj1, obj2) => {
-  const formatObj = render(obj1, obj2);
-  const iter = (obj, spaceStr, spaceBracket) => {
-    const arrUniqueKey = Object.keys(obj);
-    const result = arrUniqueKey.reduce((acc, key) => {
-      const value = obj[key];
-      if (typeof (value) === 'object') {
-        return `${acc}${getSpace(key, spaceStr)}${key}: ${iter(value, spaceStr + 4, spaceBracket + 4)}`;
+const getFormatStylish = (tree) => {
+  const iter = (arr, depth = 0) => {
+    const stringify = (value, depthSpaces) => {
+      if (typeof(value) !== 'object') {
+        return value;
       }
-      return `${acc}${getSpace(key, spaceStr)}${key}: ${value}\n`;
-    }, '');
-    return `{\n${result}${tab(spaceBracket)}}\n`;
+      const keys = Object.keys(value);
+      const result = keys.map((key) => (`{\n${tab(depthSpaces + 2)}${key}: ${stringify(value[key])}\n${tab(depthSpaces + 1)}}`));
+      return result;
+    };
+    const result = arr.flatMap((node) => {
+      switch (node.type) {
+        case 'nested':
+          return `${tab(depth + 1)}${node.key}: {\n${iter(node.children, depth + 1)}\n${tab(depth + 1)}}`;
+        case 'added':
+          return `  ${tab(depth)}+ ${node.key}: ${stringify(node.value, depth)}`;
+        case 'removed':
+          return `  ${tab(depth)}- ${node.key}: ${stringify(node.value, depth)}`;
+        case 'changed':
+          return [
+            `  ${tab(depth)}- ${node.key}: ${stringify(node.value, depth)}`,
+            `  ${tab(depth)}+ ${node.key}: ${stringify(node.newValue, depth)}`
+                  ];
+        case 'unchanged':
+          return `    ${tab(depth)}${node.key}: ${stringify(node.value, depth)}`;
+        default:
+          throw new Error(`Unknown status! "${node.type}" wrong!`);                                              
+      }
+  });
+    return result.join('\n');
   };
-  return iter(formatObj, 4, 0);
+  return iter(tree);
 };
 
 export default getFormatStylish;

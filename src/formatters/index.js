@@ -1,15 +1,14 @@
 import stylish from './stylish.js';
-import json from './json.js';
 import plain from './plain.js';
 
-const formatSelection = (obj1, obj2, format) => {
+const formatSelection = (tree, format) => {
   switch (format) {
     case 'stylish':
-      return stylish(obj1, obj2);
+      return `{\n${stylish(tree)}\n}`;
     case 'json':
-      return json(obj1, obj2);
+      return JSON.stringify(tree);
     case 'plain':
-      return plain(obj1, obj2);
+      return plain(tree);
     default:
       throw new Error(`Unknown format: '${format}'!`);
   }

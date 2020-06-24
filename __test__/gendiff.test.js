@@ -3,19 +3,28 @@ import path from 'path';
 import genDiff from '../src/index.js';
 
 const getPath = (filename) => path.join(__dirname, '..', '__fixtures__', filename);
-const filetypesEndFormats = [['ini', 'stylish'],
-  ['json', 'stylish'],
-  ['yml', 'stylish'],
-  ['ini', 'plain'],
-  ['json', 'plain'],
-  ['yml', 'plain'],
-  ['ini', 'json'],
-  ['json', 'json'],
-  ['yml', 'json']];
+const getDataFile = (format) => fs.readFileSync(getPath(`${format}.diff`), 'utf-8');
+let stylish;
+let plain;
+let json;
+beforeAll(() => {
+  stylish = getDataFile('stylish');
+  plain = getDataFile('plain');
+  json = getDataFile('json');
+});
 
-test.each(filetypesEndFormats)('%s type files difference with %s output', (filetype, format) => {
-  const before = getPath(`before.${filetype}`);
-  const after = getPath(`after.${filetype}`);
-  const output = fs.readFileSync(getPath(`${format}.diff`), 'utf-8');
-  expect(genDiff(before, after, format)).toString(output);
+test('stylish', () => {
+  const before = getPath('before.ini');
+  const after = getPath('after.ini');
+  expect(genDiff(before, after)).toString(stylish);
+});
+test('plain', () => {
+  const before = getPath('before.json');
+  const after = getPath('after.json');
+  expect(genDiff(before, after, 'plain')).toString(plain);
+});
+test('json', () => {
+  const before = getPath('before.yml');
+  const after = getPath('after.yml');
+  expect(genDiff(before, after, 'json')).toString(json);
 });
