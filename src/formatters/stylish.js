@@ -2,7 +2,7 @@ const tab = (x) => ' '.repeat(x);
 const getFormatStylish = (tree) => {
   const iter = (arr, depth = 0) => {
     const stringify = (value, depthSpaces) => {
-      if (typeof(value) !== 'object') {
+      if (typeof (value) !== 'object') {
         return value;
       }
       const keys = Object.keys(value);
@@ -20,14 +20,14 @@ const getFormatStylish = (tree) => {
         case 'changed':
           return [
             `  ${tab(depth)}- ${node.key}: ${stringify(node.value, depth)}`,
-            `  ${tab(depth)}+ ${node.key}: ${stringify(node.newValue, depth)}`
-                  ];
+            `  ${tab(depth)}+ ${node.key}: ${stringify(node.newValue, depth)}`,
+          ];
         case 'unchanged':
           return `    ${tab(depth)}${node.key}: ${stringify(node.value, depth)}`;
         default:
-          throw new Error(`Unknown status! "${node.type}" wrong!`);                                              
+          throw new Error(`Unknown status! "${node.type}" wrong!`);
       }
-  });
+    });
     return result.join('\n');
   };
   return iter(tree);

@@ -10,7 +10,7 @@ const formatSelection = (tree, format) => {
     case 'plain':
       return plain(tree);
     default:
-      throw new Error(`Unknown format: '${format}'!`);
+      throw new Error(`Unknown format: ${format}!`);
   }
 };
 

@@ -11,14 +11,14 @@ const getFormatPlain = (arrTree) => {
         case 'removed':
           return `Property '${acc}${node.key}' was deleted`;
         case 'changed':
-          return `Property '${acc}${node.key}' was changed from '${checkValue(node.value)}' to '${checkValue(node.newValue)}'`
+          return `Property '${acc}${node.key}' was changed from '${checkValue(node.value)}' to '${checkValue(node.newValue)}'`;
         default:
-          throw new Error (`Unknown type ${node.type} wrong!`);
-        };
-  });
-  return result.join('\n');
-}
-return iter(arrTree, '');
+          throw new Error(`Unknown type ${node.type} wrong!`);
+      }
+    });
+    return result.join('\n');
+  };
+  return iter(arrTree, '');
 };
 
 export default getFormatPlain;
