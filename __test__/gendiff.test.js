@@ -1,5 +1,5 @@
-import fs from 'fs';
 import path from 'path';
+import fs from 'fs';
 import genDiff from '../src/index.js';
 
 const getPath = (filename) => path.join(__dirname, '..', '__fixtures__', filename);

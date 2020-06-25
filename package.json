@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "'Project-2 hexlet'",
   "scripts": {
-    "test": "npx -n --experimental-vm-modules jest",
+    "test": "npx -n --experimental-vm-modules jest"
   },
   "bin": {
     "gendiff": "src/bin/gendiff.js"
