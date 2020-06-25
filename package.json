@@ -2,11 +2,8 @@
   "name": "project-2",
   "version": "1.0.0",
   "description": "'Project-2 hexlet'",
-  "main": "index.js",
   "scripts": {
-    "test": "jest",
-    "build": "cross-env NODE_ENV=production babel src --out-dir dist --source-maps inline",
-    "prepublishOnly": "npm run build"
+    "test": "npx -n --experimental-vm-modules jest",
   },
   "bin": {
     "gendiff": "dist/bin/gendiff.js"
@@ -22,12 +19,6 @@
   },
   "homepage": "https://github.com/Altuninovich/frontend-project-lvl2#readme",
   "devDependencies": {
-    "@babel/cli": "^7.10.1",
-    "@babel/core": "^7.10.1",
-    "@babel/node": "^7.10.1",
-    "@babel/preset-env": "^7.10.1",
-    "babel-eslint": "^10.1.0",
-    "babel-jest": "^26.0.1",
     "cross-env": "^7.0.2",
     "eslint": "^7.2.0",
     "eslint-config-airbnb-base": "^14.1.0",
