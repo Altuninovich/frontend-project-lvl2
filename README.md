@@ -107,7 +107,7 @@ Gendiff supports different output formats:
 Use -f flag to set required output format.
 `-f, --format [type]  output format`
 
-### Output formats description
+### Output format Stylish
 
 #### Stylish
 Stylish output format is a hierarchical tree. Affected key:value pairs are marked by '+' or '-' means option was added or deleted from resulting file. If value was modified it represents two rows with '+' new value and '-' old value. Unmodified pairs displays as is.
