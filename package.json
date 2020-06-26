@@ -17,6 +17,11 @@
   "bugs": {
     "url": "https://github.com/Altuninovich/frontend-project-lvl2/issues"
   },
+  "type": "module",
+  "jest": {
+    "testEnvironment": "node",
+    "transform": {}
+  },
   "homepage": "https://github.com/Altuninovich/frontend-project-lvl2#readme",
   "devDependencies": {
     "cross-env": "^7.0.2",
