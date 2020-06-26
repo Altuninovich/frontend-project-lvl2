@@ -26,6 +26,91 @@ $ make install
 ```sh
 $ make test
 ```
+## Usage
+Use `gendiff --help` to show help page
+```
+Usage: gendiff [options] <firstConfig> <secondConfig>
+
+Compares two configuration files and shows a difference.
+
+Options:
+
+  -V, --version        output the version number
+  -f, --format [type]  output format
+  -h, --help           output usage information
+```
+
+## Examples
+
+```
+gendiff before.json after.json
+
+{
+  common: {
+    setting1: Value 1
+  - setting2: 200
+  - setting3: true
+  + setting3: {
+       key: value
+    }
+    setting6: {
+      key: value
+    + ops: vops
+    }
+  + follow: false
+  + setting4: blah blah
+  + setting5: {
+       key5: value5
+    }
+  }
+  group1: {
+  - baz: bas
+  + baz: bars
+    foo: bar
+  - nest: {
+       key: value
+    }
+  + nest: str
+  }
+- group2: {
+     abc: 12345
+  }
++ group3: {
+     fee: 100500
+  }
+}
+
+```
+
+```
+gendiff before.json after.json --format plain
+
+Property 'common.setting2' was removed
+Property 'common.setting3' was changed from 'true' to '[complex value]'
+Property 'common.setting6.ops' was added with value: vops
+Property 'common.follow' was added with value: false
+Property 'common.setting4' was added with value: blah blah
+Property 'common.setting5' was added with value: [complex value]
+Property 'group1.baz' was changed from 'bas' to 'bars'
+Property 'group1.nest' was changed from '[complex value]' to 'str'
+Property 'group2' was removed
+Property 'group3' was added with value: [complex value]
+```
+
+### Options
+
+Gendiff supports different output formats:
+* nested (default)
+* plain
+* JSON
+
+Use -f flag to set required output format.
+`-f, --format [type]  output format`
+
+### Output formats description
+
+#### Stylish
+Stylish output format is a hierarchical tree. Affected key:value pairs are marked by '+' or '-' means option was added or deleted from resulting file. If value was modified it represents two rows with '+' new value and '-' old value. Unmodified pairs displays as is.
 ## Пример использования
 
 ##Поиск различий между двумя плоскими json-файлами
