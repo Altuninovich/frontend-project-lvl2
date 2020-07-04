@@ -100,7 +100,7 @@ Property 'group3' was added with value: [complex value]
 ### Options
 
 Gendiff supports different output formats:
-* nested (default)
+* stylish (default)
 * plain
 * JSON
 
