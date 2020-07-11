@@ -6,10 +6,8 @@ import format from './formatters/index.js';
 import buildTree from './treeBuilder.js';
 
 const genDiff = (pathToFile1, pathToFile2, dataFormat = 'stylish') => {
-  
   const getData = (pathToFile) => fs.readFileSync(pathToFile, 'utf-8');
-  const getFormat = (pathToFile) => _.trim(path.extname(pathToFile1), '.');
-  
+  const getFormat = (pathToFile) => _.trim(path.extname(pathToFile), '.');
   const dataFile1 = getData(pathToFile1);
   const dataFile2 = getData(pathToFile2);
   const formatFile1 = getFormat(pathToFile1);

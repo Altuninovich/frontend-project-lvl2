@@ -1,8 +1,10 @@
+import _ from 'lodash';
+
 const tab = (x) => ' '.repeat(x);
 const getFormatStylish = (tree) => {
   const iter = (arr, depth = 0) => {
     const stringify = (value, depthSpaces) => {
-      if (typeof (value) !== 'object') {
+      if (!_.isObject(value)) {
         return value;
       }
       const keys = Object.keys(value);

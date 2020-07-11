@@ -2,8 +2,6 @@ import path from 'path';
 import fs from 'fs';
 import genDiff from '../src/index.js';
 
-console.log(path.resolve('./__fixtures__/result.diff'));
-
 const getPath = (filename) => path.resolve('__fixtures__', filename);
 const getDataFile = (format) => fs.readFileSync(getPath(`${format}.diff`), 'utf-8');
 let stylish;
@@ -18,7 +16,6 @@ beforeAll(() => {
 test('stylish', () => {
   const before = getPath('before.ini');
   const after = getPath('after.ini');
-  console.log(genDiff(before, after));
   expect(genDiff(before, after)).toString(stylish);
 });
 test('plain', () => {

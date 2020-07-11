@@ -1,5 +1,7 @@
+import _ from 'lodash';
+
 const getFormatPlain = (arrTree) => {
-  const checkValue = (value) => (typeof (value) === 'object' ? '[complex value]' : value);
+  const checkValue = (value) => (_.isObject(value) ? '[complex value]' : value);
   const iter = (tree, acc) => {
     const newTree = tree.filter((node) => node.type !== 'unchanged');
     const result = newTree.map((node) => {

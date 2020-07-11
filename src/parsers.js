@@ -1,7 +1,7 @@
 import yaml from 'js-yaml';
 import ini from 'ini';
 
-const parsers = (data, ext) => {
+const parse = (data, ext) => {
   switch (ext) {
     case 'json':
       return JSON.parse(data);
@@ -14,4 +14,4 @@ const parsers = (data, ext) => {
   }
 };
 
-export default parsers;
+export default parse;
