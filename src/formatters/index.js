@@ -4,7 +4,7 @@ import plain from './plain.js';
 const formatSelection = (tree, format) => {
   switch (format) {
     case 'stylish':
-      return `{\n${stylish(tree)}\n}`;
+      return stylish(tree);
     case 'json':
       return JSON.stringify(tree);
     case 'plain':

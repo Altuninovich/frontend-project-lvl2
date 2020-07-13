@@ -5,11 +5,14 @@ import parse from './parsers.js';
 import format from './formatters/index.js';
 import buildTree from './treeBuilder.js';
 
+const getData = (pathToFile) => fs.readFileSync(pathToFile, 'utf-8');
+const getFormat = (pathToFile) => _.trim(path.extname(pathToFile), '.');
+const getFullPath = (filepath) => path.resolve(process.cwd(), filepath);
 const genDiff = (pathToFile1, pathToFile2, dataFormat = 'stylish') => {
-  const getData = (pathToFile) => fs.readFileSync(pathToFile, 'utf-8');
-  const getFormat = (pathToFile) => _.trim(path.extname(pathToFile), '.');
-  const dataFile1 = getData(pathToFile1);
-  const dataFile2 = getData(pathToFile2);
+  const fullPath1 = getFullPath(pathToFile1);
+  const fullPath2 = getFullPath(pathToFile2);
+  const dataFile1 = getData(fullPath1);
+  const dataFile2 = getData(fullPath2);
   const formatFile1 = getFormat(pathToFile1);
   const formatFile2 = getFormat(pathToFile2);
   const dataBefore = parse(dataFile1, formatFile1);

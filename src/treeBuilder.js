@@ -1,41 +1,41 @@
 import _ from 'lodash';
 
-const buildTree = (objFileBefore, objFileAfter) => {
-  const arrUniqueKey = _.union(Object.keys(objFileBefore), Object.keys(objFileAfter)).sort();
-  const resultObj = arrUniqueKey.map((key) => {
-    if (_.isObject(objFileBefore[key]) && _.isObject(objFileAfter[key])) {
+const buildTree = (data1, data2) => {
+  const keys = _.union(Object.keys(data1), Object.keys(data2)).sort();
+  const resultObj = keys.map((key) => {
+    if (_.isObject(data1[key]) && _.isObject(data2[key])) {
       return {
         key,
         type: 'nested',
-        children: buildTree(objFileBefore[key], objFileAfter[key]),
+        children: buildTree(data1[key], data2[key]),
       };
     }
-    if (_.has(objFileBefore, key) && !_.has(objFileAfter, key)) {
+    if (!_.has(data2, key)) {
       return {
         key,
         type: 'removed',
-        value: objFileBefore[key],
+        value: data1[key],
       };
     }
-    if (!_.has(objFileBefore, key) && _.has(objFileAfter, key)) {
+    if (!_.has(data1, key)) {
       return {
         key,
         type: 'added',
-        value: objFileAfter[key],
+        value: data2[key],
       };
     }
-    if (objFileBefore[key] !== objFileAfter[key]) {
+    if (data1[key] !== data2[key]) {
       return {
         key,
         type: 'changed',
-        value1: objFileBefore[key],
-        value2: objFileAfter[key],
+        value1: data1[key],
+        value2: data2[key],
       };
     }
     return {
       key,
       type: 'unchanged',
-      value: objFileBefore[key],
+      value: data1[key],
     };
   });
   return resultObj;

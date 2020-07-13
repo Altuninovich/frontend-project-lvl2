@@ -1,31 +1,31 @@
 import _ from 'lodash';
 
-const tab = (x) => ' '.repeat(x);
-const getFormatStylish = (tree) => {
+const indent = (depth) => ' '.repeat(depth);
+const stringify = (value, depth) => {
+  if (!_.isObject(value)) {
+    return value;
+  }
+  const keys = Object.keys(value);
+  const result = keys.map((key) => (`{\n${indent(depth + 2)}${key}: ${stringify(value[key])}\n${indent(depth + 1)}}`));
+  return result;
+};
+const renderStylish = (tree) => {
   const iter = (arr, depth = 0) => {
-    const stringify = (value, depthSpaces) => {
-      if (!_.isObject(value)) {
-        return value;
-      }
-      const keys = Object.keys(value);
-      const result = keys.map((key) => (`{\n${tab(depthSpaces + 2)}${key}: ${stringify(value[key])}\n${tab(depthSpaces + 1)}}`));
-      return result;
-    };
     const result = arr.flatMap((node) => {
       switch (node.type) {
         case 'nested':
-          return `${tab(depth + 1)}${node.key}: {\n${iter(node.children, depth + 1)}\n${tab(depth + 1)}}`;
+          return `${indent(depth + 1)}${node.key}: {\n${iter(node.children, depth + 1)}\n${indent(depth + 1)}}`;
         case 'added':
-          return `  ${tab(depth)}+ ${node.key}: ${stringify(node.value, depth)}`;
+          return `  ${indent(depth)}+ ${node.key}: ${stringify(node.value, depth)}`;
         case 'removed':
-          return `  ${tab(depth)}- ${node.key}: ${stringify(node.value, depth)}`;
+          return `  ${indent(depth)}- ${node.key}: ${stringify(node.value, depth)}`;
         case 'changed':
           return [
-            `  ${tab(depth)}- ${node.key}: ${stringify(node.value, depth)}`,
-            `  ${tab(depth)}+ ${node.key}: ${stringify(node.newValue, depth)}`,
+            `  ${indent(depth)}- ${node.key}: ${stringify(node.value, depth)}`,
+            `  ${indent(depth)}+ ${node.key}: ${stringify(node.newValue, depth)}`,
           ];
         case 'unchanged':
-          return `    ${tab(depth)}${node.key}: ${stringify(node.value, depth)}`;
+          return `    ${indent(depth)}${node.key}: ${stringify(node.value, depth)}`;
         default:
           throw new Error(`Unknown status! "${node.type}" wrong!`);
       }
@@ -35,4 +35,4 @@ const getFormatStylish = (tree) => {
   return iter(tree);
 };
 
-export default getFormatStylish;
+export default (tree) => `{\n${renderStylish(tree)}\n}`;
