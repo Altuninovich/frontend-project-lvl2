@@ -1,6 +1,7 @@
 import _ from 'lodash';
 
 const indent = (depth) => ' '.repeat(depth);
+
 const stringify = (value, depth) => {
   if (!_.isObject(value)) {
     return value;
@@ -9,9 +10,10 @@ const stringify = (value, depth) => {
   const result = keys.map((key) => (`{\n${indent(depth + 2)}${key}: ${stringify(value[key])}\n${indent(depth + 1)}}`));
   return result;
 };
+
 const renderStylish = (tree) => {
-  const iter = (arr, depth = 0) => {
-    const result = arr.flatMap((node) => {
+  const iter = (subtree, depth = 0) => {
+    const result = subtree.flatMap((node) => {
       switch (node.type) {
         case 'nested':
           return `${indent(depth + 1)}${node.key}: {\n${iter(node.children, depth + 1)}\n${indent(depth + 1)}}`;

@@ -2,29 +2,30 @@ import path from 'path';
 import fs from 'fs';
 import genDiff from '../src/index.js';
 
-const getPath = (filename) => path.resolve('__fixtures__', filename);
-const getDataFile = (format) => fs.readFileSync(getPath(`${format}.diff`), 'utf-8');
+const getFixturePath = (filename) => path.resolve('__fixtures__', filename);
+
+const readFixture = (filename) => fs.readFileSync(getFixturePath(filename), 'utf-8');
 let stylish;
 let plain;
 let json;
 beforeAll(() => {
-  stylish = getDataFile('stylish');
-  plain = getDataFile('plain');
-  json = getDataFile('json');
+  stylish = readFixture('stylish.diff');
+  plain = readFixture('plain.diff');
+  json = readFixture('json.diff');
 });
 
 test('stylish', () => {
-  const before = getPath('before.ini');
-  const after = getPath('after.ini');
+  const before = getFixturePath('before.ini');
+  const after = getFixturePath('after.ini');
   expect(genDiff(before, after)).toString(stylish);
 });
 test('plain', () => {
-  const before = getPath('before.json');
-  const after = getPath('after.json');
+  const before = getFixturePath('before.json');
+  const after = getFixturePath('after.json');
   expect(genDiff(before, after, 'plain')).toString(plain);
 });
 test('json', () => {
-  const before = getPath('before.yml');
-  const after = getPath('after.yml');
+  const before = getFixturePath('before.yml');
+  const after = getFixturePath('after.yml');
   expect(genDiff(before, after, 'json')).toString(json);
 });

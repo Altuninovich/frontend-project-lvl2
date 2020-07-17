@@ -1,17 +1,17 @@
-import stylish from './stylish.js';
-import plain from './plain.js';
+import renderStylish from './stylish.js';
+import renderPlain from './plain.js';
 
-const formatSelection = (tree, format) => {
-  switch (format) {
+const format = (tree, fileFormat) => {
+  switch (fileFormat) {
     case 'stylish':
-      return stylish(tree);
+      return renderStylish(tree);
     case 'json':
       return JSON.stringify(tree);
     case 'plain':
-      return plain(tree);
+      return renderPlain(tree);
     default:
-      throw new Error(`Unknown format: ${format}!`);
+      throw new Error(`Unknown format: ${fileFormat}!`);
   }
 };
 
-export default formatSelection;
+export default format;

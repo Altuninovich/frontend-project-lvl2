@@ -1,6 +1,7 @@
 import _ from 'lodash';
 
 const stringify = (value) => (_.isObject(value) ? '[complex value]' : value);
+
 const renderPlain = (tree) => {
   const iter = (arr, acc) => {
     const result = arr.map((node) => {
