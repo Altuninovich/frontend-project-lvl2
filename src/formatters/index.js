@@ -1,8 +1,8 @@
 import renderStylish from './stylish.js';
 import renderPlain from './plain.js';
 
-const format = (tree, fileFormat) => {
-  switch (fileFormat) {
+export default (tree, format) => {
+  switch (format) {
     case 'stylish':
       return renderStylish(tree);
     case 'json':
@@ -10,8 +10,6 @@ const format = (tree, fileFormat) => {
     case 'plain':
       return renderPlain(tree);
     default:
-      throw new Error(`Unknown format: ${fileFormat}!`);
+      throw new Error(`Unknown format: ${format}!`);
   }
 };
-
-export default format;

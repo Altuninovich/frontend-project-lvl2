@@ -3,8 +3,8 @@ import _ from 'lodash';
 const stringify = (value) => (_.isObject(value) ? '[complex value]' : value);
 
 const renderPlain = (tree) => {
-  const iter = (arr, acc) => {
-    const result = arr.map((node) => {
+  const iter = (subtree, acc) => {
+    const result = subtree.map((node) => {
       switch (node.type) {
         case 'unchanged':
           return [];
